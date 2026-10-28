@@ -1,0 +1,14 @@
+{
+  "name": "baselissmail",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "header": "node scripts/header.mjs",
+    "posts": "node scripts/posts.mjs"
+  },
+  "devDependencies": {
+    "@fontsource/atkinson-hyperlegible-mono": "5.3.0",
+    "@fontsource/atkinson-hyperlegible-next": "5.3.0",
+    "opentype.js": "1.3.4"
+  }
+}
