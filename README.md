@@ -53,7 +53,7 @@ Clinicians open digital-health tools from inside their EHR with their EHR sign-i
 </td>
 <td width="50%" valign="top">
 
-**AI Module Studio**<br><sub>2026 · designed and built it, 130+ commits and 15 design docs</sub>
+**AI Module Studio**<br><sub>2026 · shipped in v3.1 · designed and built it, 130+ commits and 15 design docs</sub>
 
 An admin describes a clinical tool in chat. An agent writes it, a reviewer approves it, and it runs inside the provider portal next to the patient's chart.
 
@@ -68,13 +68,13 @@ An admin describes a clinical tool in chat. An agent writes it, a reviewer appro
 <tr>
 <td width="50%" valign="top">
 
-**Telehealth for care facilities**<br><sub>2023–25 · 1,300+ of 3,500 commits</sub>
+**Telehealth for care facilities**<br><sub>2023–25 · top contributor, 1,300+ commits · handed over to the client in 2025</sub>
 
-A white-label EMRAY build for a telehealth provider: facility nurses page a remote clinician, who acknowledges, joins a video visit, documents it and records an outcome. Connected to PointClickCare and CharmHealth.
+A white-label EMRAY build for a telehealth provider. Facility nurses page a remote clinician from a live dashboard; the clinician acknowledges, joins a video visit, chats with the nurse during and after it, documents and records an outcome. Clinician schedules sync from Google Calendar, and it connects to PointClickCare and CharmHealth.
 
+- **Led it from fork to its first releases** (v0.1 to v0.5, August to November 2024), then handed the code over to the client's own organization
 - Wrote the **encounter workflows on Step Functions**: assignment, 10- and 15-minute reminder loops, documentation and a timed auto-close, driven by task-token callbacks
-- Built the SMS and email fallbacks for unanswered pages, and the nurse and encounter reports
-- Wrote most of the Cognito triggers behind per-EHR sign-in
+- Built the SMS and email fallbacks for unanswered pages, the nurse and encounter reports, and most of the Cognito triggers behind per-EHR sign-in
 
 <sub>Angular 18 · Nx · NestJS on Lambda · Step Functions · Amazon Chime SDK · Terraform</sub>
 
