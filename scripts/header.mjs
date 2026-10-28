@@ -1,24 +1,14 @@
 #!/usr/bin/env node
 // Draws the profile header: a career on ECG paper, in the smart-doctor palette.
-// Text is converted to outlines so it looks the same on every OS (an <img> SVG can't load web fonts).
 //
 //   npm install && npm run header   → assets/header-light.svg, assets/header-dark.svg
 
 import { writeFile } from 'node:fs/promises';
-import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import opentype from 'opentype.js';
+import { mono500, mono700, outline, sans400, sans800 } from './type.mjs';
 
-const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const font = (pkg, weight) =>
-  opentype.loadSync(require.resolve(`@fontsource/atkinson-hyperlegible-${pkg}/files/atkinson-hyperlegible-${pkg}-latin-${weight}-normal.woff`));
-
-const sans800 = font('next', 800);
-const sans400 = font('next', 400);
-const mono500 = font('mono', 500);
-const mono700 = font('mono', 700);
 
 const W = 1200;
 const H = 480;
@@ -44,25 +34,6 @@ const vitals = [
   { label: 'EHR VENDORS', value: '8', unit: 'integrated' },
   { label: 'CITIES MAPPED', value: '100+', unit: 'in 3D' },
 ];
-
-/** Outline `text` with optional tracking (in em). Returns { d, width }. */
-function outline(f, text, size, { x = 0, y = 0, tracking = 0, anchor = 'start' } = {}) {
-  const scale = size / f.unitsPerEm;
-  const glyphs = f.stringToGlyphs(text);
-  let width = 0;
-  glyphs.forEach((g, i) => {
-    width += g.advanceWidth * scale;
-    if (i < glyphs.length - 1) width += f.getKerningValue(g, glyphs[i + 1]) * scale + tracking * size;
-  });
-  let cx = anchor === 'middle' ? x - width / 2 : anchor === 'end' ? x - width : x;
-  const parts = [];
-  glyphs.forEach((g, i) => {
-    parts.push(g.getPath(cx, y, size).toPathData(1));
-    cx += g.advanceWidth * scale;
-    if (i < glyphs.length - 1) cx += f.getKerningValue(g, glyphs[i + 1]) * scale + tracking * size;
-  });
-  return { d: parts.join(''), width };
-}
 
 /** One PQRST complex centred on x. */
 function complex(x, amp = 1) {

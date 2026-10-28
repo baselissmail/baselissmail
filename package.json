@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "header": "node scripts/header.mjs",
+    "activity": "node scripts/activity.mjs",
     "posts": "node scripts/posts.mjs"
   },
   "devDependencies": {

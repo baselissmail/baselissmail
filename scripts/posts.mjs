@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Rewrites the "Latest writing" list in README.md from my Medium feed.
-// No dependencies; runs daily in .github/workflows/writing.yml. A failed fetch leaves the README alone.
+// No dependencies; runs daily in .github/workflows/refresh.yml. A failed fetch leaves the README alone.
 
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';

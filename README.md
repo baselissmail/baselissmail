@@ -10,10 +10,11 @@
   <a href="https://www.linkedin.com/in/basel-issmail">linkedin</a> ·
   <a href="https://x.com/Baselissmail">x</a> ·
   <a href="https://stackoverflow.com/users/8396204/basel-issmail">stack overflow</a> ·
-  <a href="https://linktr.ee/basel.issmail">everything else</a>
+  <a href="https://linktr.ee/basel.issmail">everything else</a> ·
+  <a href="https://github.com/basel-kepler">work github ↗</a>
 </samp></p>
 
-I'm a tech lead at [Kepler](https://www.kepler.team), where I lead engineering on [EMRAY](https://emray.health): a platform that lets health systems run digital-health tools inside the EHR, for clinicians, patients and the people who govern them. Ten years in, I care most about the parts that decide whether software actually works: sign-in flows, permissions, migrations, failure modes and the monthly bill. I like tools that tell you what's wrong in plain English, so I build them.
+I'm a tech lead at [Kepler](https://www.kepler.team), a product team for healthcare companies. I lead engineering on [EMRAY](https://emray.health), our platform for running digital-health tools inside the EHR, and on the telehealth, behavioral-health and AI products we build for clients. Ten years in, I care most about the parts that decide whether software actually works: sign-in flows, permissions, migrations, failure modes and the monthly bill. I like tools that tell you what's wrong in plain English, so I build them.
 
 ### Now
 
@@ -23,7 +24,80 @@ I'm a tech lead at [Kepler](https://www.kepler.team), where I lead engineering o
 
 <sub>Updated October 2026.</sub>
 
-## Featured
+## Pulse
+
+Most of my commits land on my work account, **[@basel-kepler](https://github.com/basel-kepler)**, so the graph under this profile shows only part of the year. This monitor adds both accounts together and redraws itself every morning.
+
+<a href="https://github.com/basel-kepler">
+  <img src="assets/activity.svg" width="100%" alt="Activity monitor: my contributions over the last 12 months across my work account (@basel-kepler) and this personal account, drawn as a weekly trace, with totals, active days and the busiest day. Redrawn daily by a GitHub Action.">
+</a>
+
+## At Kepler · 2023 – now
+
+[Kepler](https://www.kepler.team) is a product team for healthcare companies: telehealth providers, behavioral-health and digital-therapeutics startups, medical-device makers and health-data businesses. I'm tech lead on [EMRAY](https://emray.health), Kepler's EHR-integrated platform, and on the client products built with it or beside it. That means architecture and a lot of the code, and it also means sitting with clients: production-readiness plans, HIPAA readiness reviews, onboarding a new EHR, and briefing hospital IT teams.
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+**EMRAY platform**<br><sub>2023 → now · 2,600+ of the platform's 5,900 commits</sub>
+
+Clinicians open digital-health tools from inside their EHR with their EHR sign-in; patients get content and assessments on their own portal. Three Angular apps on serverless AWS, SOC 2 and HIPAA compliant.
+
+- SMART on FHIR launch and backend services for **8 EHRs**: Epic, Oracle Health, athenahealth, AdvancedMD, Altera, Netsmart and more
+- Designed **permissions generated from the GraphQL schema** for all 226 operations, rolled out behind a shadow-mode authorizer; [shipped in v3.0](https://emray.health/release-notes)
+- Took the team's **Rust Lambda authorizers** to production: cold starts from 906 ms to 56 ms
+
+<sub>Angular · AppSync · Lambda (TypeScript, Rust) · DynamoDB · Cognito · CDK · Terraform</sub>
+
+</td>
+<td width="50%" valign="top">
+
+**AI Module Studio**<br><sub>2026 · designed and built it, 130+ commits and 15 design docs</sub>
+
+An admin describes a clinical tool in chat. An agent writes it, a reviewer approves it, and it runs inside the provider portal next to the patient's chart.
+
+- **Four layers of defence**: prompt rules, a build-time scan that bounces forbidden code back to the agent, an iframe sandbox without same-origin, and a CSP that blocks all network access
+- **One way out**: a host-mediated API proxy with an allowlist, server-held credentials, SSRF guards and DNS pinning; EHR reads are consented per resource
+- Bundles re-hashed before publish, reviewer dialogue, and customers bring their own Anthropic, Google or OpenAI key
+
+<sub>LLM tool-use loop on Lambda · sandboxed iframes · postMessage RPC</sub>
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+**Telehealth for care facilities**<br><sub>2023–25 · 1,300+ of 3,500 commits</sub>
+
+A white-label EMRAY build for a telehealth provider: facility nurses page a remote clinician, who acknowledges, joins a video visit, documents it and records an outcome. Connected to PointClickCare and CharmHealth.
+
+- Wrote the **encounter workflows on Step Functions**: assignment, 10- and 15-minute reminder loops, documentation and a timed auto-close, driven by task-token callbacks
+- Built the SMS and email fallbacks for unanswered pages, and the nurse and encounter reports
+- Wrote most of the Cognito triggers behind per-EHR sign-in
+
+<sub>Angular 18 · Nx · NestJS on Lambda · Step Functions · Amazon Chime SDK · Terraform</sub>
+
+</td>
+<td width="50%" valign="top">
+
+**Questionnaires on FHIR SDC**<br><sub>2026 · shipped in v4.0</sub>
+
+Admins build assessments, clinicians assign them, patients answer as a chat or a page, and results come back as scores with severity bands. Replaces the chatbot-based intake.
+
+- Brought a native **FHIR SDC engine** into the platform: `enableWhen` branching, ordinal scoring, validation, with PHQ-9 and GAD-7 in the library
+- Built the **visual canvas builder** (after evaluating three graph libraries) and multi-tenant ownership with RBAC
+- **AI governance**: models may prefill answers and summarize results, but never compute a score
+
+<sub>FHIR R4 SDC · Angular · AppSync · LLM extract steps</sub>
+
+</td>
+</tr>
+</table>
+
+**Also at Kepler:** code for nine client products beyond EMRAY, six of them in depth; the `@emray/sdk` 2.0 that partners integrate with (top committer); a streaming EHR data-ingest pipeline; and a realtime voice-avatar prototype on the OpenAI Realtime API.
+
+## Open source
 
 <a href="https://github.com/baselissmail/smart-doctor">
   <picture>
@@ -42,16 +116,6 @@ npx smart-doctor ui --demo    # a practice EHR that fails on purpose, in your br
 - Built to be trusted: [OpenSSF Best Practices](https://www.bestpractices.dev/projects/16012) badge, npm provenance, Sigstore-attested binaries, a Scorecard workflow and property-based tests
 - Runs in CI as a [GitHub Action](https://github.com/baselissmail/smart-doctor#nightly-monitoring) that catches expiring keys every night, and ships as a Claude Code plugin
 
-## At Kepler · 2023 – now
-
-EMRAY is three Angular apps (provider, patient and admin) on a serverless AWS back end: AppSync GraphQL, Lambda in TypeScript and Rust, DynamoDB and Cognito, provisioned with CDK and Terraform. I've written about 2,600 of the platform's 5,900 commits and lead its architecture and releases.
-
-- **EHR integrations with 8 vendors**, including Epic, Oracle Health and athenahealth, over SMART on FHIR launch and backend services. HL7 v2 arrives through an MLLP gateway that acknowledges a message only once it's durably stored.
-- **Permissions generated from the GraphQL schema** for all 226 operations, rolled out behind a shadow-mode authorizer that logs every would-be denial before it enforces anything.
-- **Authorizers rewritten in Rust**, cutting cold starts from 906 ms to 56 ms and warm calls from about 100 ms to 6 ms.
-- **AI Module Studio**: admins describe a tool in plain words, a model builds it, and it runs in a sandboxed iframe with governed EHR reads and SSRF-guarded network access. Bring your own Anthropic, Google or OpenAI key.
-- **Patient questionnaires on FHIR SDC**, replacing a chatbot-based intake, plus telehealth video and camera-based vital signs.
-
 ## The workshop
 
 Things I build on my own time, end to end: product, design, code and launch.
@@ -61,7 +125,6 @@ Things I build on my own time, end to end: product, design, code and launch.
 | **[Glimby](https://glimby.app)** | A gentle, gamified to-do app for adults with ADHD. Brain-dump everything, get one clear next step, no streaks or guilt. AI is cost-capped and optional, so it works offline. | Next.js 16, React 19, Postgres, Drizzle, Better Auth, Playwright + axe |
 | **[LinePilot](https://www.linepilot.app)** | A [Chrome extension](https://chromewebstore.google.com/detail/linepilot/pfgifepnciihbddbkbjopjbhkcppcobc) that guides your eyes line by line so you read faster and drift less. Sentence-aware (Unicode UAX #29) and fully keyboard-accessible. | TypeScript, Manifest V3, Vite, Vitest |
 | **Dental Lab OS** | Case tracking for dental labs, in Arabic and English. Multi-tenant, with tenant isolation in Postgres row-level security. *In progress.* | React 19, Hono, tRPC, Postgres 18, Drizzle |
-| **[Serendipity Studio](https://baselissmail.gumroad.com/l/xrvwdr)** | 75+ prompt templates with the creative constraints that make AI output interesting. | Vanilla JS |
 
 ## Before Kepler
 
@@ -85,8 +148,9 @@ Things I build on my own time, end to end: product, design, code and launch.
 
 ## Toolbox
 
-- **Every day:** TypeScript · Angular · React · Node.js · AWS (CDK, AppSync, Lambda, DynamoDB, Cognito, Step Functions) · Terraform · GitHub Actions
-- **Healthcare:** FHIR R4 · SMART on FHIR · HL7 v2 · FHIR SDC · HIPAA
+- **Every day:** TypeScript · Angular · React · Node.js · AWS (CDK, AppSync, Lambda, DynamoDB, Cognito, Step Functions, Chime SDK) · Terraform · GitHub Actions
+- **Healthcare:** FHIR R4 · SMART on FHIR · FHIR SDC · EHR onboarding · HIPAA and SOC 2 controls
+- **AI:** tool-use agents · sandboxed code generation · Anthropic, OpenAI and Google APIs · OpenAI Realtime
 - **Also:** Rust · Next.js · Postgres · Playwright · Python
 
 Arabic is my first language, I work in English, and I get by in Russian.

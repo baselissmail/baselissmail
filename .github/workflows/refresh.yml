@@ -1,5 +1,6 @@
-name: Latest writing
+name: Refresh profile
 
+# Daily: redraw the activity monitor (both accounts' contribution calendars) and list the latest Medium posts.
 on:
   schedule:
     - cron: '41 6 * * *'
@@ -9,7 +10,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: writing
+  group: refresh
   cancel-in-progress: false
 
 jobs:
@@ -21,11 +22,16 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node scripts/activity.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - run: node scripts/posts.mjs
-      - name: Commit if the list changed
+      - name: Commit if anything changed
         run: |
-          git diff --quiet README.md && exit 0
+          git diff --quiet && exit 0
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Refresh latest writing' README.md
+          git commit -am 'Refresh activity and latest writing'
           git push
